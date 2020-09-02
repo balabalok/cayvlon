@@ -1,0 +1,26 @@
+{% extends 'base2.html' %}
+{% block title %}
+<title>MangaRaw Search</title>
+{% endblock %}
+{% block random %}
+<a class="nav-link" href="{% url 'minfo' m_slug=random.manga_slug %}"><i class="fas fa-random"></i> Random</a>
+{% endblock %}
+{% block content %}
+<div class="search-page">
+<aside class="pagespace left">
+</aside>
+<article class="container" id="search-section">
+<form action="{% url 'search' %}" is="searcher">
+<div class="form-group single">
+<input id="inputContent" name="search" type="text" class="form-control" value="" placeholder="Search Manga Name" aria-label="Novel Search" aria-describedby="basic-addon1">
+</div>
+    <center><button onclick="document.getElementById('searcher').submit();" style="background-color: Transparent;background-repeat:no-repeat;border: none;font-size:30px"><i class="fas fa-search"></i></button></center>
+</form>
+<section id="novelListBase" class="container">
+
+</section>
+</article>
+<aside class="pagespace right">
+</aside>
+</div>
+{% endblock %}

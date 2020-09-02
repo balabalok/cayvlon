@@ -1,0 +1,218 @@
+from django.shortcuts import render,get_object_or_404
+from .models import manga,chapter,genre
+from django.core.paginator import Paginator
+from django.db.models import F,Max
+from django.http import HttpResponseNotFound
+
+def home_2(request):
+    all_genres = genre.objects
+    template = 'home/home_2.html'
+    manga_objects = manga.objects.annotate(
+        last_update_time=Max('chapter__chapter_added')
+    ).order_by('-last_update_time')[0:20]
+
+    mangas = manga_objects
+
+    top = manga.objects.all().order_by('-manga_views')[1:13]
+    top_1 = manga.objects.all().order_by('-manga_views')[0]
+
+    top_raw = manga.objects.filter(manga_genres__icontains='Raw').order_by('-manga_views')[0:12]
+
+    return render(request,template, {'genres':all_genres, 'manga': mangas, 'top': top, 'top_1': top_1,'raw': top_raw})
+
+
+def home(request):
+    all_genres = genre.objects
+    template = 'home/home.html'
+    manga_objects = manga.objects.annotate(
+        last_update_time=Max('chapter__chapter_added')
+    ).order_by('-last_update_time')
+
+    pagination = Paginator(manga_objects, 10)
+    try:
+        page = request.GET.get('page', '1')
+    except:
+        page = 1
+
+    try:
+        mangas = pagination.page(page)
+    except Exception:
+        mangas = pagination.page(pagination.num_pages)
+
+    top = manga.objects.all().order_by('-manga_views')[0:10]
+
+    return render(request,template, {'genres':all_genres, 'manga': mangas, 'top': top})
+
+def manga_info(request,m_slug):
+    manga.objects.filter(manga_slug=m_slug).update(manga_views=F('manga_views')+1)
+    all_genres = genre.objects
+    manga_object = get_object_or_404(manga,manga_slug=m_slug)
+    chaptersx = chapter.objects.filter(chapter_manga=manga_object).order_by('-chapter_added')
+    template = 'manga/manga.html'
+    pagination = Paginator(chaptersx, 20)
+    try:
+        page = request.GET.get('page', '1')
+    except:
+        page = 1
+
+    try:
+        chapters = pagination.page(page)
+    except Exception:
+        chapters = pagination.page(pagination.num_pages)
+
+    try:
+
+        if "," in manga_object.manga_genres:
+            manga_tag_ = manga_object.manga_genres.split(",")
+            manga_tag = list(filter(None, manga_tag_))
+        else:
+            manga_tag = []
+            manga_tag.append(manga_object.manga_genres)
+            manga_tag = list(filter(None, manga_tag))
+    except:
+        pass
+
+    try:
+        if ',' in manga_object.manga_authors:
+            manga_authors_ = manga_object.manga_authors.split(',')
+            manga_authors = list(filter(None, manga_authors_))
+        else:
+            manga_authors = []
+            manga_authors.append(manga_object.manga_authors)
+            manga_authors = list(filter(None, manga_authors))
+
+    except:
+        pass
+
+
+    top = manga.objects.all().order_by('-manga_views')[0:10]
+
+
+    context = {'manga': manga_object, 'genres':all_genres, 'tags': manga_tag, 'chapters': chapters,
+               'author': manga_authors, 'top': top}
+
+
+    return render(request, template, context)
+
+def author_search(request,tag):
+    template = 'result/author.html'
+    if tag == None or tag == '':
+    return HttpResponseNotFound
+   
+    tag_results = manga.objects.filter(manga_authors__icontains=tag)
+    page_x = Paginator(tag_results, 20)
+
+    try:
+        page_num = request.GET.get('page', '1')
+    except Exception:
+        page_num = 1
+
+    try:
+        results = page_x.page(page_num)
+    except:
+        results = page_x.page(page_x.num_pages)
+
+    genres = genre.objects.all
+    top = manga.objects.all().order_by('-manga_views')[0:10]
+
+    return render(request, template, {'results': results, 'genres': genres, 'tagx': tag,'top': top})
+
+def tag_search(request,tag):
+    template = 'result/result.html'
+    tag_results = manga.objects.filter(manga_genres__icontains=tag)
+    page_x = Paginator(tag_results, 20)
+
+    try:
+        page_num = request.GET.get('page', '1')
+    except Exception:
+        page_num = 1
+
+    try:
+        results = page_x.page(page_num)
+    except:
+        results = page_x.page(page_x.num_pages)
+    top = manga.objects.all().order_by('-manga_views')[0:10]
+
+    genres = genre.objects.all
+
+
+    return render(request, template, {'results': results, 'genres': genres, 'tagx': tag,'top': top})
+
+def chapter_read(request,c_slug):
+    template = 'chapter/chapter.html'
+
+    chapter_object = get_object_or_404(chapter,chapter_slug=c_slug)
+
+    manga_object = manga.objects.get(manga_slug=chapter_object.chapter_manga.manga_slug)
+
+    chapter_objects_all = chapter.objects.filter(chapter_manga__manga_name=manga_object.manga_name)
+
+    try:
+        next = chapter.objects.get(id=chapter_object.id+1)
+    except:
+        next = ''
+
+    try:
+        old = chapter.objects.get(id=chapter_object.id-1)
+    except:
+        old = ''
+
+
+    chapter_images = chapter_object.chapter_links.split("|")
+
+
+    context = {
+                'images': chapter_images,
+                'manga': manga_object,
+                'chapter_list': chapter_objects_all,
+                'chapter': chapter_object,
+                'old': old,
+                'next': next,
+               }
+
+    return render(request, template, context)
+
+
+def status_search(request,tag):
+    template = 'result/status.html'
+    tag_results = manga.objects.filter(manga_status__icontains=tag)
+    page_x = Paginator(tag_results, 20)
+
+    try:
+        page_num = request.GET.get('page', '1')
+    except Exception:
+        page_num = 1
+
+    try:
+        results = page_x.page(page_num)
+    except:
+        results = page_x.page(page_x.num_pages)
+
+    genres = genre.objects.all
+    top = manga.objects.all().order_by('-manga_views')[0:10]
+
+    return render(request, template, {'results': results, 'genres': genres, 'tagx': tag,'top': top})
+
+def search(request):
+    key = request.GET['key']
+    template = 'result/status.html'
+    tag_results = manga.objects.filter(manga_name__icontains=key)
+    page_x = Paginator(tag_results, 20)
+
+    try:
+        page_num = request.GET.get('page', '1')
+    except Exception:
+        page_num = 1
+
+    try:
+        results = page_x.page(page_num)
+    except:
+        results = page_x.page(page_x.num_pages)
+
+    genres = genre.objects.all
+    top = manga.objects.all().order_by('-manga_views')[0:10]
+    return render(request, template, {'results': results, 'genres': genres, 'tagx': key, 'top': top})
+
+def not_found_error(request, exception):
+    template = '404.html'
+    return render(request,template)

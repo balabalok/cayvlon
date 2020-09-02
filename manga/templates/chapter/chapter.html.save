@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Read Manga {{manga.manga_name}} Chapter {{chapter.chapter_number}} free on - {{request.get_host}}
+{% endblock %}
+{% block meta %}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="csrf-param" content="_csrf">
+    <meta name="title" content="{{manga.manga_name}} Chapter {{chapter.chapter_number}} read - {{request.get_host}}">
+    <meta name="description" content="Read {{manga.manga_name}} chapter {{chapter.chapter_number}} free, {{manga.manga_name}} chapter {{chapter.chapter_number}} Manganation, Read Webtoons Free, Read {{manga.manga_name}} chapters,MangaNation">
+    <meta name="keywords" content="Read Latest Manga">
+{% endblock %}
+
+{% block content %}
+<style>
+div.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: yellow;
+  padding: 0px;
+  font-size: 20px;
+  width: 50px;
+  float: right;
+  height: 0px;
+  margin-right: 60px;
+}
+</style>
+<script>
+  function tryAgain(e)
+  {
+    setTimeout(reloadImg, 1000, e);
+  }
+
+  function reloadImg(e)
+  {
+    var source = e.src;
+    e.src = source;
+  }
+</script>
+<main id="container" class=" " style="background-image: url('{% static 'images/manga_background.jpg' %}');">
+    <div class="navbar-breadcrumb" style="display: block">
+        <div class="container breadcrumb-container">
+            <ol class="breadcrumb">
+                <li><a href="/" title="Read novel online"><span><i class="fas fa-home"></i></span></a></li>
+                <li>
+                    <h1><a href="{% url 'minfo' m_slug=chapter.chapter_manga.manga_slug %}" title="{{manga.manga_name}}"><span>{{manga.manga_name}}</span></a></h1></li>
+                <li ><a href="" title="{{chapter.chapter_manga.manga_name}} Chapter {{chapter.chapter_number}}"><span>Chapter {{chapter.chapter_number}}</span></a></li>
+            </ol>
+        </div>
+    </div>
+    <div id="chapter" class="chapter container">
+        <div class="row">
+            <div class="col-xs-12"><a class="truyen-title" href="{% url 'minfo' m_slug=manga.manga_slug %}" title="{{manga.manga_name}}" style="color: #DE9D3B">{{manga.manga_name}}</a>
+                <h2><a class="chapter-title" href="{% url 'c_read' c_slug=chapter.chapter_slug %}" title="{{manga.manga_name}} Chapter {{chapter.chapter_number}}"><span style="color: #ECE2E0" class="chapter-text">Chapter {{chapter.chapter_number}}<span></span></span></a></h2>
+                <hr class="chapter-start">
+
+
+                <button type="button" class="btn btn-responsive btn-success toggle-nav-open " onclick="window.location.href = '#bottom';" style="background-color: #DE9D3B;border-color: #DE9D3B;"><i class="fas fa-arrow-down"></i></button>
+
+
+
+                <div class="chapter-nav" id="chapter-nav-top">
+                    <div class="btn-group">
+
+
+                <select class="btn btn-success form-control chapter_jump" style="background-color: #DE9D3B;border-color: #DE9D3B;" onchange="location = this.value;">
+                    <option value="audi" selected>Select Chapters</option>
+
+                    {% for chapters in chapter_list.all %}
+
+                    <option value="/reader/{{chapters.chapter_slug}}/">{{chapter_text.has_next}}Chapter {{chapters.chapter_number}}</option>
+
+                    {% endfor %}
+
+                </select>
+
+                </div>
+                    <div class="sticky">
+                        {% if chapter == chapter_list.last %}
+
+                        <button  class="btn disabled" style="margin-bottom: 2px;width: 100px;background-color: #DE9D3B;">Next&nbsp; <i class="fas fa-forward"></i></button>
+                        {% else %}
+                        <button onclick="window.location.href='{% url 'c_read' c_slug=next.chapter_slug %}'" class="btn" style="margin-bottom: 2px;width: 100px;background-color: #DE9D3B;">Next&nbsp; <i class="fas fa-forward"></i></button>
+                        {% endif %}
+                        <br>
+                        {% if chapter == chapter_list.first %}
+                        <button style="background-color: #DE9D3B;" class="btn disabled"><i class="fas fa-backward"></i>&nbsp; Previous </button>
+                        {% else %}
+                        <button onclick="window.location.href='{% url 'c_read' c_slug=old.chapter_slug %}'" style="background-color: #DE9D3B;" class="btn"><i class="fas fa-backward"></i>&nbsp; Previous </button>
+                        {% endif %}
+
+                    </div>
+                <hr class="chapter-end">
+                <div id="chapter-content" class="chapter-c" style="font-family: Arial, sans-serif, serif; font-size: 18px; line-height: 160%;">
+
+                    {% for links in images %}
+
+                    <img src="https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=31104000&url={{links}}" onerror="tryAgain(this)"  style="margin-bottom: 2px;"/>
+
+                    {% endfor %}
+
+                    <div align="left">
+
+                </div>
+                <hr class="chapter-end">
+
+                <div class="text-center" id="bottom" style="margin-bottom: 15px;" class="wp-manga-chapter-img img-responsive lazyload effect-fade">
+
+                <select class="btn btn-success form-control chapter_jump" style="background-color: #DE9D3B;border-color: #DE9D3B;" onchange="location = this.value;">
+                    <option value="audi" selected>Select Chapters</option>
+
+                    {% for chapters in chapter_list.all %}
+
+                    <option value="/reader/{{chapters.chapter_slug}}/">Chapter {{chapters.chapter_number}}</option>
+
+                    {% endfor %}
+
+                </select>
+                </div>
+
+
+
+
+                <div class="col-xs-12" style="margin-bottom: 5px;">
+
+                </div>
+            </div>
+        </div>
+                </div>
+        </div>
+<div style="float: left;background-color: #EDDABC;"><div class="fb-comments" data-href="https://www.manganation.club/reader/{{chapter.chapter_slug}}" data-w><div style="float: left;background-color: #EDDABC;"><div class="fb-comments" data-href="https://www.manganation.club/reader/{{chapter.chapter_slug}}" data-width="" data-numposts="10"></div></div>
+    </div>
+
+</main>
+{% endblock %}

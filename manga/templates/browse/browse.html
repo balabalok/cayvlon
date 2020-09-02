@@ -1,0 +1,115 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block title %}
+<title>MangaRaw Browser</title>
+{% endblock %}
+{% block random %}
+<a class="nav-link" href="{% url 'minfo' m_slug=random.manga_slug %}"><i class="fas fa-random"></i> Random</a>
+{% endblock %}
+{% block content %}
+<article id="explore" class="container">
+<div class="adsbox">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8519815186204299" data-ad-slot="6101771434" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+<nav class="filters">
+<h4 class="proptitle">Genre / Category</h4>
+<div id="categorylist" class="scroll-wrapper">
+<ul class="proplist">
+<li> <a href="{% url 'browse' %}" title="All">All</a></li>
+ {% for genre in genres %}
+<li>
+
+{% if genre.genre_name == current_genre %}
+ <a class="active" href="#" title="{{genre.genre_name}}">{{genre.genre_name}}</a>
+{% else %}
+ <a href="{% url 'browse' %}?genre={{genre.genre_name}}&results=1" title="{{genre.genre_name}}">{{genre.genre_name}}</a>
+{% endif %}
+</li>
+{% endfor %}
+</ul>
+</div>
+</nav>
+<header id="Result">
+<h1>Search Manga. </h1>
+<p class="description">
+Showings results for {{current_genre}}.
+</p>
+<nav class="paging">
+  {% if current_genre == 'All' %}
+
+
+ {% if manga.has_previous %}
+ <a href="{% url 'browse' %}?results={{manga.previous_page_number}}"><i class="fas fa-chevron-left"></i></a>
+ {% else %}
+ <a class="bound" href="#"><i class="fas fa-chevron-left"></i></a>
+ {% endif %}
+
+ {% else %}
+ {% if manga.has_previous %}
+  <a href="{% url 'browse' %}?genre={{current_genre}}&results={{manga.previous_page_number}}"><i class="fas fa-chevron-left"></i></a>
+ {% else %}
+ <a class="bound" href="#"><i class="fas fa-chevron-left"></i></a>
+ {% endif %}
+ {% endif %}
+
+
+ <a class="bound" href="#">{{manga.number}}</a>
+
+ {% if current_genre == 'All' %}
+ <a href="{% url 'browse' %}?results={{manga.paginator.num_pages}}">{{manga.paginator.num_pages}}</a>
+ {% else %}
+  <a href="{% url 'browse' %}?genre={{current_genre}}&results={{manga.paginator.num_pages}}">{{manga.paginator.num_pages}}</a>
+ {% endif %}
+
+
+ {% if current_genre == 'All' %}
+
+ {% if manga.has_next %}
+ <a href="{% url 'browse' %}?results={{manga.next_page_number}}"><i class="fas fa-chevron-right"></i></a>
+ {% else %}
+ <a class="bound" href="#"><i class="fas fa-chevron-right"></i></a>
+ {% endif %}
+
+ {% else %}
+  {% if manga.has_next %}
+  <a href="{% url 'browse' %}?genre={{current_genre}}&results={{manga.next_page_number}}"><i class="fas fa-chevron-right"></i></a>
+  {% else %}
+ <a class="bound" href="#"><i class="fas fa-chevron-right"></i></a>
+ {% endif %}
+ {% endif %}
+
+
+</nav>
+</header>
+<section>
+<ul class="novel-list grid col col2">
+ {% for mangas in manga %}
+<li class="novel-item">
+<a href="{% url 'minfo' m_slug=mangas.manga_slug %}" title="{{mangas.manga_name}}">
+<div class="cover-wrap">
+<figure class="novel-cover">
+ {% if mangas.manga_cover %}
+<img class="lazy" src="{% static 'img/loading.gif' %}" data-src='{{mangas.manga_cover.url}}' alt="{{mangas.manga_name}}" />
+ {% else %}
+<img class="lazy" src="{% static 'img/loading.gif' %}" data-src='{{mangas.manga_cover_url}}' alt="{{mangas.manga_name}}" />
+ {% endif %}
+</figure>
+</div>
+<h4 class="novel-title text2row">
+{{mangas.manga_name}}
+</h4>
+<h6 class="text1row">Author(S): {{mangas.manga_authors}}</h6>
+<div class="novel-stats">
+<strong> Chapters {{mangas.chapter_set.count}}</strong>
+<span><i class="fas fa-clock"></i> {{mangas.chapter_set.last.chapter_added|timesince}} Ago</span>
+</div>
+<div class="summary truncate-fade" title="{{mangas.manga_descrition}}">
+{{mangas.manga_descrition|truncatechars:80}}
+</div>
+</a>
+</li>
+{% endfor %}
+</ul>
+</section>
+</article>
+{% endblock %}

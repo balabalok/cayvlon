@@ -1,0 +1,193 @@
+
+{% extends 'base2.html' %}
+{% load static %}
+{% load cache %}
+{% block meta %}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+<meta name="description" content="At Manga raw you can read raw manga. manhwa, manhua completely free with english interface and without any ads, Welcome to manga raw." />
+<meta name="keywords" content="manga, raw manga, webtoons, Manhua, Manhwa, manga-raw, read raw manga," />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.manga-raw.club/" />
+<meta property="og:site_name" content="MangaRaw" />
+<meta property="og:title" content="MangaRaw Read Raw Manga Free. | MangaRaw" />
+<meta property="og:description" content="At Manga raw you can read raw manga. manhwa, manhua completely free with english interface and without any ads, Welcome to manga raw." />
+<meta property="og:image" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="MangaRaw" />
+<meta name="twitter:creator" content="MangaRaw" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="MangaRaw Read Raw Manga Free. | MangaRaw" />
+<meta name="twitter:description" content="At Manga raw you can read raw manga. manhwa, manhua completely free with english interface and without any ads, Welcome to manga raw." />
+<meta name="twitter:url" content="https://www.manga-raw.club/" />
+<meta name="twitter:image" />
+<link rel="alternate" hreflang="en" href="https://www.manga-raw.club/" />
+<link rel="canonical" href="https://www.manga-raw.club/" />
+{% endblock %}
+{% block title %}
+<title>Read Raw Manga For free | MangaRaw</title>
+{% endblock %}
+{% block random %}
+<a class="nav-link" href="{% url 'minfo' m_slug=random.manga_slug %}"><i class="fas fa-random"></i> Random</a>
+{% endblock %}
+
+{% block content %}
+<section>
+<header class="head-slider">
+<div class="img-wrapper">
+ {% cache 1200 banr %}
+<img src="{% static 'img/banr.jpg' %}" data-src="{% static 'img/banr.jpg' %}" class="lazy" alt="MangaRaw" />
+ {% endcache %}
+</div>
+<div class="slider-body">
+<div class="container">
+<div class="content">
+<h4>Welcome to Manga Raw !</h4>
+<p>
+Read hand chosen best manga Raw/English and french no bullshit.
+</p>
+
+<p>
+Start browsing manga.
+</p>
+</div>
+<div class="novel-content">
+<div class="swiper-container" id="mainhead-slider">
+<ul class="swiper-wrapper">
+
+ {% for manga in new_manga %}
+<li class="swiper-slide novel-item">
+<a href="{% url 'minfo' m_slug=manga.manga_slug %}" title="{{manga.manga_name}}">
+<figure class="novel-cover">
+
+{% if manga.manga_cover %}
+<img class="lazy" src="{% static 'img/loading.gif' %}" data-src='{{manga.manga_cover.url}}' data-srcset="{{manga.manga_cover.url}} 2x, {{manga.manga_cover.url}} 1x" alt="{{manga.manga_name}}" />
+ {% else %}
+ <img class="lazy" src="{% static 'img/loading.gif' %}" data-src='{{manga.manga_cover_url}}' data-srcset="{{manga.manga_cover_url}} 2x, {{manga.manga_cover_url}} 1x" alt="{{manga.manga_name}}" />
+ {% endif %}
+</figure>
+<h4 class="novel-title">
+{{manga.manga_name}}
+</h4>
+<div class="novel-stats">
+<span class="text1row">Added {{manga.chapter_set.last.chapter_added|timesince}}</span>
+</div>
+</a>
+</li>
+ {% endfor %}
+</ul>
+</div>
+</div>
+</div>
+</div>
+</header>
+<article id="index">
+
+ <section class="container vspace fullfit">
+<div class="section-header">
+<h3>Most Clicked Manga.</h3>
+<p>Top Clicks</p>
+</div>
+<div class="section-body">
+<div class="swiper-container" id="updated-novel-slider">
+<ul class="swiper-wrapper">
+ {% for manga in top_manga %}
+<li class="swiper-slide novel-item">
+<a href="{% url 'minfo' m_slug=manga.manga_slug %}" title="{{manga.manga_name}}">
+<figure class="novel-cover">
+{% if manga.manga_cover %}
+<img class="lazy" src="{% static 'img/loading.gif' %}" data-src='{{manga.manga_cover.url}}' data-srcset="{{manga.manga_cover.url}} 2x, {{manga.manga_cover.url}} 1x" alt="{{manga.manga_name}}" />
+ {% else %}
+ <img class="lazy" src="{% static 'img/loading.gif' %}" data-src='{{manga.manga_cover_url}}' data-srcset="{{manga.manga_cover_url}} 2x, {{manga.manga_cover_url}} 1x" alt="{{manga.manga_name}}" />
+ {% endif %}
+</figure>
+<h4 class="novel-title text2row">
+{{manga.manga_name}}
+</h4>
+<div class="novel-stats">
+<span class="text1row">Clicks {{manga.manga_views}}</span>
+</div>
+</a>
+</li>
+{% endfor %}
+
+</ul>
+</div>
+<div class="updated-slide slider-button prev"><i class="fas fa-chevron-left"></i></div>
+<div class="updated-slide slider-button next"><i class="fas fa-chevron-right"></i></div>
+</div>
+</section>
+ <section class="container vspace">
+<div class="section-header" id="latest">
+<h3>Latest Manga Updates</h3>
+<p>New Chapters:</p>
+<a class="getmorebtn" href="/browse" title="Most Popular Light Novels">View More</a>
+</div>
+<div class="section-body" id="popular-novel-section">
+<ul class="novel-list grid">
+ {% for manga in updated_manga %}
+<li class="novel-item">
+<a href="{% url 'minfo' m_slug=manga.manga_slug %}" title="{{manga.manga_name}}">
+<figure class="novel-cover">
+ {% if manga.manga_cover %}
+<img class="lazy" src="{% static 'img/loading.gif' %}" data-src='{{manga.manga_cover.url}}' data-srcset="{{manga.manga_cover.url}} 2x, {{manga.manga_cover.url}} 1x" alt="{{manga.manga_name}}" />
+ {% else %}
+ <img class="lazy" src="{% static 'img/loading.gif' %}" data-src='{{manga.manga_cover_url}}' data-srcset="{{manga.manga_cover_url}} 2x, {{manga.manga_cover_url}} 1x" alt="{{manga.manga_name}}" />
+ {% endif %}
+</figure>
+<h4 class="novel-title text2row">
+{{manga.manga_name}}
+</h4>
+</a>
+<div class="novel-stats">
+<span class="text1row">C: {{manga.chapter_set.last.chapter_number}}&nbsp;<img src="{% static 'img/new.gif' %}" alt="New"></span>
+</div>
+</li>
+{% endfor %}
+</ul>
+</div>
+</section>
+
+<section class="container vspace">
+<header class="section-header">
+<h3>Alerts, News & Blogs</h3>
+</header>
+<div class="section-body">
+<table class="updates-table">
+<thead>
+<tr class="c_s">
+<th>Title</th>
+<th>Staff</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+{% for alert in alerts %}
+<tr>
+<td>
+<a href="{% url 'shine' slug=alert.alert_slug %}" title="{{alert.alert_title}}">
+{{alert.alert_title}}
+</a>
+</td>
+
+<td>
+<span class="author">
+{{alert.alert_by}} <p style="display: inline;" class="text text-primary"><i class="fas fa-check-circle"></i></p>
+</span>
+</td>
+<td>
+<div class="time">
+<time datetime="{{alert.alert_date}}">{{alert.alert_date|timesince}} ago</time>
+</div>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</section>
+</article>
+</section>
+{% endblock %}

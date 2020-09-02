@@ -1,0 +1,287 @@
+/* Minification failed. Returning unminified contents.
+(250,17): run-time error CSS1062: Expected semicolon or closing curly-brace, found '-'
+(251,35): run-time error CSS1039: Token not allowed after unary operator: '-lh'
+ */
+
+.navbar-menu {
+    font-size: 18px;
+}
+
+.triangle-bottom:after {
+    left: -52px;
+}
+
+.triangle-bottom:before {
+    left: -56px;
+}
+
+.container, .main-header .wrapper, footer .wrapper {
+    width: 920px;
+}
+
+main {
+    margin-bottom: 180px;
+}
+
+
+footer {
+    height: 180px;
+    padding: 20px;
+}
+
+    footer .copyright {
+        font-size: 12px;
+    }
+
+    footer .links {
+        font-size: 14px;
+    }
+
+    footer .footer-logo {
+        height: 90px;
+    }
+
+
+.novel-list.grid {
+    grid-column-gap: 30px;
+}
+
+    .novel-list.grid.col.col2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .novel-list.grid.col.col1 {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+.novel-item {
+    width: 100%;
+}
+
+    .novel-item.ads {
+        /*grid-area: span 1 / span 2;*/
+    }
+        .novel-item.ads .browse {
+            display: inline-block;
+            width: 100%;
+            min-width: 200px;
+            max-width: 530px;
+            min-height: 200px;
+            max-height: 250px;
+            height: 100%;
+        }
+
+    .novel-item .novel-stats {
+        font-size: 14px;
+        line-height: 22px;
+    }
+
+        .novel-item .novel-stats i {
+            width: 18px;
+        }
+
+.swiper-container .swiper-wrapper .swiper-slide.novel-item {
+    width: 13.872%;
+    padding-right: 30px;
+    max-height: inherit;
+}
+
+    .swiper-container .swiper-wrapper .swiper-slide.novel-item a {
+        min-height: 270px;
+    }
+
+.slider-button {
+    top: 64px;
+}
+
+    .slider-button.next {
+        right: -3.6vw
+    }
+
+    .slider-button.prev {
+        left: -3.6vw
+    }
+
+.updates-table a {
+    max-width: 22rem;
+}
+
+.updates-table .author {
+    max-width: 10rem;
+}
+
+.updates-table .time {
+    max-width: 6rem;
+}
+
+.novel-title {
+    font-size: 18px;
+}
+
+.novel-bg {
+    height: 320px;
+}
+
+
+.novel-header {
+    height: 400px;
+}
+
+    .novel-header .fixed-img {
+        flex: 0 0 232px;
+        height: 330px;
+    }
+
+    .novel-header .novel-info .categories {
+        font-size: 20px;
+    }
+
+    .novel-header .novel-info .header-stats {
+        font-size: 18px;
+    }
+
+        .novel-header .novel-info .header-stats i {
+            width: 20px;
+            font-size: 18px;
+            margin-right: 4px;
+        }
+
+        .novel-header .novel-info .header-stats span {
+            margin-right: 20px;
+            width: auto;
+        }
+
+
+    .novel-header .novel-info .mt {
+        margin-top: 14px;
+    }
+
+    .novel-header .novel-info > * {
+        margin-bottom: 6px;
+    }
+
+    .novel-header .novel-info .categories {
+        margin-top: 16px;
+    }
+
+    .novel-header .novel-info > *:last-child {
+        margin-bottom: 0;
+    }
+
+    .novel-header .novel-info .wrapper {
+        font-size: 16px;
+    }
+
+        .novel-header .novel-info .wrapper .inline {
+            margin-right: 20px;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+    .novel-header .novel-info .links a {
+        padding: 5px 20px;
+        flex: 0 0 220px;
+    }
+
+
+.categories ul li {
+    padding: 2px 12px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+#info .tags ul li a {
+    font-size: 14px;
+}
+
+.related .swiper-container .swiper-wrapper .swiper-slide.novel-item {
+    height: 270px;
+}
+
+#chapter .chapter-list .list-body {
+    max-width: 350px;
+}
+
+
+
+.head-slider {
+    height: 420px;
+}
+
+        .head-slider .img-wrapper img {
+            height: 420px;
+            object-position: 50% 100%;
+        }
+
+    .head-slider .slider-body {
+        padding-top: 3%;
+        padding-bottom: 2%;
+    }
+
+        .head-slider .slider-body .content h1,
+        .head-slider .slider-body .content h4 {
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 36px;
+        }
+
+        .head-slider .slider-body .content p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .head-slider .slider-body .container {
+            display: flex;
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        .head-slider .slider-body .content {
+            flex: 0 0 70%;
+            padding-right: 10px;
+            padding-top: 6%;
+        }
+
+        .head-slider .slider-body .novel-content {
+            width: 200px;
+            margin-right: 20px;
+            padding: 20px 0 20px 30px;
+            /*background-color: rgba(0,0,0,0.2);
+            border-radius: 10px;*/
+        }
+
+            .head-slider .slider-body .novel-content .novel-title {
+                --lh: 1.7rem;
+                line-height: var(--lh);
+            }
+
+            .head-slider .slider-body .novel-content .novel-stats > span {
+                font-size: 12px;
+            }
+
+.search-page {
+    display: flex;
+}
+
+    .search-page article {
+        flex: 0 0 auto;
+    }
+
+    .search-page .pagespace {
+        flex: 1;
+        position: relative;
+        padding: 20px 5px 5px 5px;
+    }
+
+        .search-page .pagespace .adsbox {
+            display: block;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+
+            .search-page .pagespace .adsbox.sticky {
+                width: auto;
+                position: fixed;
+                top: 10px;
+            }

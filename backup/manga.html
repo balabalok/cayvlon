@@ -1,0 +1,311 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block meta %}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+<meta name="title" content="[RAW] Manga: {{manga.manga_name}} Read">
+<meta name="description" content="{{manga.manga_name}}, {{manga.manga_other_names}} manga read raw for free." />
+<meta name="keywords" content="manga, raw manga, webtoons, Manhua, Manhwa, manga-raw, read raw manga," />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta property="og:image" content="https://www.manga-raw.club{{manga.manga_cover.url}}">
+<meta name="image" content="https://www.manga-raw.club{{manga.manga_cover.url}}">
+<meta itemprop="image" content="https://www.manga-raw.club{{manga.manga_cover.url}}">
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.manga-raw.club/manga/{{manga.manga_slug}}/" />
+<meta property="og:site_name" content="MangaRaw" />
+<meta property="og:title" content="[RAW]: Manga {{manga.manga_name}} Read" />
+<meta property="og:description" content="Read manga {{manga.manga_name}} raw, {{manga.manga_other_names}} for free on manga manga-raw.club all raw chapters without ads, raw {{manga.manga_name}}, raw {{manga.manga_other_names}}." />
+<meta property="og:image:secure_url" content="https://www.manga-raw.club{{manga.manga_cover.url}}" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="MangaRaw" />
+<meta name="twitter:creator" content="MangaRaw" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="[RAW] Manga: {{manga.manga_name}} Read" />
+<meta name="twitter:description" content="Read Raw manga {{manga.manga_name}}, {{manga.manga_other_names}} for free on manga manga-raw.club all raw chapters, raw {{manga.manga_name}}, raw {{manga.manga_other_names}}." />
+<meta name="twitter:url" content="https://www.manga-raw.club/manga/{{manga.manga_slug}}/" />
+<meta name="twitter:image" />
+<link rel="alternate" hreflang="en" href="https://www.manga-raw.club/manga/{{manga.manga_slug}}/" />
+<link rel="canonical" href="https://www.manga-raw.club/manga/{{manga.manga_slug}}/" />
+{% endblock %}
+{% block title %}
+<title>[RAW] Manga: {{manga.manga_name}} Read</title>
+{% endblock %}
+{% block random %}
+<a class="nav-link" href="{% url 'minfo' m_slug=random.manga_slug %}"><i class="fas fa-random"></i> Random</a>
+{% endblock %}
+{% block script %}
+    <script>
+
+function showDivRaw() {
+   document.getElementById('raw').style.display = "block";
+   document.getElementById('raw').innerHTML = `
+        {% for chapter in chapters %}
+<li data-chapterno="378" data-volumeno="0" data-orderno="{{chapter.chapter_number}}">
+<a href="{% url 'c_read' c_slug=chapter.chapter_slug %}" title="{{manga.manga_name}} Chapter {{chapter.chapter_number}}">
+<span class="chapter-no ">{{chapter.chapter_number}}</span>
+<div class="list-body">
+<h6 class="chapter-title">
+Chapter {{chapter.chapter_number|truncatechars:40}} </h6>
+<time class="chapter-update" datetime="2019-10-08 09:00">
+{{chapter.chapter_added|timesince}} ago
+</time>
+</div>
+</a>
+</li>
+    {% endfor %}
+  `;
+}
+    </script>
+    <script>
+
+function showDivFr() {
+   document.getElementById('raw').style.display = "block";
+   document.getElementById('raw').innerHTML = `
+        {% for chapter in chapters_fr %}
+<li data-chapterno="378" data-volumeno="0" data-orderno="{{chapter.chapter_number}}">
+<a href="{% url 'c_read' c_slug=chapter.chapter_slug %}" title="{{manga.manga_name}} Chapter {{chapter.chapter_number}}">
+<span class="chapter-no ">{{chapter.chapter_number}}</span>
+<div class="list-body">
+<h6 class="chapter-title">
+Chapter {{chapter.chapter_number|truncatechars:40}} </h6>
+<time class="chapter-update" datetime="2019-10-08 09:00">
+{{chapter.chapter_added|timesince}} ago
+</time>
+</div>
+</a>
+</li>
+    {% endfor %}
+  `;
+}
+    </script>
+
+    <script>
+
+function showDivEng() {
+   document.getElementById('raw').style.display = "block";
+   document.getElementById('raw').innerHTML = `
+        {% for chapter in chapters_eng %}
+<li data-chapterno="{{chapter.chapter_number}}" data-volumeno="0" data-orderno="{{chapter.chapter_number}}">
+<a href="{% url 'c_read' c_slug=chapter.chapter_slug %}" title="{{manga.manga_name}} Chapter {{chapter.chapter_number}}">
+<span class="chapter-no ">{{chapter.chapter_number}}</span>
+<div class="list-body">
+<h6 class="chapter-title">
+Chapter {{chapter.chapter_number|truncatechars:40}} </h6>
+<time class="chapter-update" datetime="{{chapter.chapter_added}}">
+{{chapter.chapter_added|timesince}} ago
+</time>
+</div>
+</a>
+</li>
+    {% endfor %}
+  `;
+}
+    </script>
+
+{% endblock %}
+{% block content %}
+
+<article id="novel" data-novelid="5" data-volbased="False" data-novelstr="{{manga.manga_name}}">
+<header class="novel-header">
+<div class="header-body container" >
+<div class="fixed-img">
+<figure class="cover">
+    {% if manga.manga_cover %}
+<img class="lazy" src="{{manga.manga_cover.url}}" data-src="{{manga.manga_cover.url}}" alt="{{manga.manga_name}}" />
+    {% else %}
+<img class="lazy" src="{{manga.manga_cover_url}}" data-src="{{manga.manga_cover_url}}" alt="{{manga.manga_name}}" />
+    {% endif %}
+</figure>
+</div>
+<div class="novel-info">
+<h1 class="novel-title text2row" style="color: black;">
+{{manga.manga_name}}
+</h1>
+
+
+<div class="wrapper" style="color: black;">
+<div style="color: black;" >
+<span><i class="fas fa-bars"></i> Chapters : </span>
+<strong>{{manga.chapter_set.count}}</strong>
+</div>
+<div style="color: black;" >
+<span><i class="far fa-clock"></i> Last Updated : </span>
+<strong>{{manga.chapter_set.last.chapter_added|timesince}} ago</strong>
+</div>
+<div >
+<span><i class="far fa-eye"></i> Clicks : </span>
+<strong>{{manga.manga_views}}</strong>
+</div>
+<div >
+<span><i class="fas fa-heart"></i> Hearts : </span>
+<strong>{{heart}}</strong>
+</div>
+<div >
+<span><i class="fas fa-signal"></i> Status : </span>
+<strong>{{manga.manga_status}}</strong>
+</div>
+<div >
+<span><i class="far fa-user"></i> Added by : <strong>m!sty <p style="display: inline;" class="text text-primary"><i class="fas fa-check-circle"></i></p></span></strong>
+</div>
+</div>
+
+
+<nav class="links">
+    {% if chapters %}
+<a id="readchapterbtn" href="{% url 'c_read' c_slug=manga.chapter_set.first.chapter_slug %}">First Chapter</a>
+    {% endif %}
+
+    {% if not ip %}
+<a class="empty" href="javascript: {alert('Changing Hearts is Disabled.')}" data-subscribed="">
+<span><i class="fas fa-check"></i> Hearted.</span>
+</a>
+    {% else %}
+    <form id="heart" action="{% url 'rate_manga' %}" method="post">{% csrf_token %}<input type="hidden" name="manga" value="{{manga.manga_slug}}"><input type="hidden" value="{{ip}}" name="ip"></form>
+ <a class="empty" href="javascript:{document.getElementById('heart').submit()}" data-subscribed="">
+<span><i class="fas fa-heart"></i> Heart it.</span>
+</a>
+    {% endif %}
+
+
+</nav>
+</div>
+
+</div>
+</header>
+<div class="novel-body container">
+<section id="info">
+<div class="categories">
+
+<h4>Author(S)</h4>
+<ul class="content">
+    {% if author %}
+       {% for authors in author %}
+<li>
+<a href='{% url "browse" %}?author={{authors}}' title="{{authors}}" class="property-item">
+{{authors}}
+</a>
+</li>
+    {% endfor %}
+    {% else %}
+
+    {% endif %}
+
+
+</ul>
+</div>
+<div class="categories">
+
+<h4>Other Name(S)</h4>
+<ul class="content">
+    {% if other %}
+       {% for names in other %}
+<li>
+<a href='' title="{{names}}" class="isDisabled">
+{{names}}
+</a>
+</li>
+    {% endfor %}
+    {% else %}
+
+    {% endif %}
+
+
+</ul>
+</div>
+<div class="categories">
+
+<h4>Tags</h4>
+<ul class="content">
+       {% for tag in tags %}
+<li>
+<a href='{% url "browse" %}?genre={{tag}}' title="{{tag}}" class="property-item">
+{{tag}}
+</a>
+</li>
+    {% endfor %}
+
+
+</ul>
+</div>
+<div class="summary">
+<h4>Summary</h4>
+<div class="content">
+<p>
+{{manga.manga_descrition}}
+</p>
+</div>
+</div>
+
+</section>
+<section id="chapter">
+<div class="heading">
+<h4>{{manga.manga_name}} Chapters.</h4>
+<div class="filters">
+<i id="chorder" class="fas fa-sort-amount-up" data-order="asc"></i>
+</div>
+</div>
+<div class="heading">
+<center><button onclick="showDivRaw()" class="btn btn-success">Raw Chapters</button>&nbsp;<button onclick="showDivEng()" style="display:inline;" class="btn btn-success">English Chapters</button>&nbsp;<button onclick="showDivFr()" style="display:inline;" class="btn btn-success">French Chapters</button></center>
+<div class="filters">
+
+</div>
+</div>
+<ul id="raw" class="chapter-list" style="max-height: 600px;overflow: scroll;display:none;">
+
+
+
+
+</ul>
+</section>
+<section class="content-wrap">
+            <div id="disqus_thread"></div>
+<script>
+
+var disqus_config = function () {
+this.page.url = 'https://www.manga-raw.club/manga/{{manga.manga_slug}}';
+this.page.identifier = '/manga/{{manga.manga_slug}}';
+};
+
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://manganation.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+></section>
+<section class="related">
+<h4>You'll also Like</h4>
+<div class="section-body">
+<ul class="novel-list grid">
+
+    {% for manga in recomend %}
+<li class="novel-item">
+<a href="{% url 'minfo' m_slug=manga.manga_slug %}" title="{{manga.manga_name}}">
+<figure class="novel-cover">
+    {% if manga.manga_cover %}
+<img class="lazy" src="{% static 'img/loading.gif' %}" data-src='{{manga.manga_cover.url}}' alt="{{manga.manga_name}}" />
+    {% else %}
+<img class="lazy" src="{% static 'img/loading.gif' %}" data-src='{{manga.manga_cover_url}}' alt="{{manga.manga_name}}" />
+    {% endif %}
+</figure>
+<h5 class="novel-title text2row">
+{{manga.manga_name}}
+</h5>
+<div class="novel-stats">
+<span><i class="fas fa-clock"></i> {{manga.chapter_set.last.chapter_added|timesince}} ago</span>
+</div>
+</a>
+</li>
+    {% endfor %}
+
+</ul>
+</div>
+</section>
+</div>
+</article>
+
+
+{% endblock %}

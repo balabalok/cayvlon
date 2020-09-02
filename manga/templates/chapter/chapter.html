@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+
+{% load static %}
+<!--{% load cache %}-->
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+
+
+
+{% block meta %}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+<meta name="description" content="Read raw manga {{manga.manga_name}}, {{manga.manga_other_names}} Chapter {{chapter.chapter_number}} for free on MangaRaw." />
+<meta name="keywords" content="manga, raw manga, webtoons, Manhua, Manhwa, manga-raw, read raw manga,{{manga.manga_name}},{{manga.manga_other_names}}" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta itemprop="image" content="{{manga.manga_cover.url}}">
+<meta property="og:image" content="{{manga.manga_cover.url}}">
+<meta name="image" content="{{manga.manga_cover.url}}">
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.manga-raw.club/reader/{{chapter.chapter_slug}}/" />
+<meta property="og:site_name" content="MangaRaw" />
+<meta property="og:title" content="Raw Manga {{manga.manga_name}} Chapter {{chapter.chapter_number}}" />
+<meta property="og:description" content="Read raw manga {{manga.manga_name}}, {{manga.manga_other_names}} Chapter {{chapter.chapter_number}} for free on MangaRaw." />
+<meta property="og:image" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="MangaRaw" />
+<meta name="twitter:creator" content="MangaRaw" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Raw Manga {{manga.manga_name}} Chapter {{chapter.chapter_number}}" />
+<meta name="twitter:description" content="Read raw manga {{manga.manga_name}}, {{manga.manga_other_names}} Chapter {{chapter.chapter_number}} for free on MangaRaw." />
+<meta name="twitter:url" content="https://www.manga-raw.club/reader/{{chapter.chapter_slug}}/" />
+<meta name="twitter:image" />
+<link rel="alternate" hreflang="en" href="https://www.manga-raw.club/reader/{{chapter.chapter_slug}}/" />
+<link rel="canonical" href="https://www.manga-raw.club/reader/{{chapter.chapter_slug}}/" />
+{% endblock %}
+
+
+<title>Manga: {{manga.manga_name}} Chapter - {{chapter.chapter_number}}</title>
+
+<link rel="shortcut icon" href="{% static 'img/favico.ico' %}" />
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Roboto+Condensed:400,700|Roboto+Slab|Roboto:300,400,700|Nunito+Sans:400,600,700|Raleway:400,500|Noto+Sans" data-ignore="true">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.6/css/swiper.min.css" integrity="sha256-/MUsbxMVqlXbxtYsVUN7Scrbq8Hd5Up+BntZl2TuMLQ=" crossorigin="anonymous" />
+<script src="https://kit.fontawesome.com/16a588e028.js" crossorigin="anonymous"></script>
+
+<link id='mobilecss' href="{% static 'reader/cdn/1.css' %}" rel="stylesheet" type="text/css" media="screen and (min-width: 140px)" />
+<link href="{% static 'reader/cdn/2.css' %}" rel="stylesheet" type="text/css" media="screen and (min-width: 768px)" />
+<link href="{% static 'reader/cdn/3.css' %}" rel="stylesheet" type="text/css" media="screen and (min-width: 1024px)" />
+<link href="{% static 'reader/cdn/4.css' %}" rel="stylesheet" type="text/css" media="screen and (min-width: 1270px)" />
+
+
+
+</head>
+<body class="fade-out">
+<div class="sidebar-wrapper"></div>
+<main role="main">
+
+
+<article id="chapter-article">
+<div class="head-stick-offset"></div>
+<header class="chapter-header" translate="no">
+<div class="content-wrap">
+<figure class="cover">
+{% if manga.manga_cover %}
+<img src="{{manga.manga_cover.url}}" alt="{{manga.manga_name}}" />
+{% else %}
+<img src="{{manga.manga_cover_url}}" alt="{{manga.manga_name}}" />
+{% endif %}
+</figure>
+<div class="titles">
+<h1><a href="{% url 'minfo' m_slug=manga.manga_slug %}" title="{{manga.manga_name}}">{{manga.manga_name}} {% if 'eng' in chapter.chapter_number %} [English] {% endif %} {% if 'fr' in chapter.chapter_number %} [FRENCH] {% endif %}</a></h1>
+<h2> Chapter {{chapter.chapter_number}}</h2>
+</div>
+<div class="action-items">
+    <a class="" href="{% url 'minfo' m_slug=manga.manga_slug %}" title="Manga Page"><i class="fas fa-book"></i></a>
+    <a class="" href="{% url 'home' %}" title="Home Page"><i class="fas fa-home"></i></a>
+    {% if chapter == chapter_list.first %}
+    <a class="isDisabled" href="" title=""><i class="fas fa-chevron-left"></i><span>Prev</span></a>
+    {% else %}
+    <a class="" href="/reader/{{old.chapter_slug}}" title="Chapter {{old.chapter_number}} "><i class="fas fa-chevron-left"></i><span>Prev</span></a>
+    {% endif %}
+    {% if chapter == chapter_list.last %}
+    <a class="isDisabled" href="" title=" "><span>Next</span><i class="fas fa-chevron-right"></i></a>
+    {% else %}
+    <a class="" href="/reader/{{next.chapter_slug}}" title="Chapter {{next.chapter_number}} "><span>Next</span><i class="fas fa-chevron-right"></i></a>
+    {% endif %}
+
+
+</div>
+</div>
+    <script>
+  function tryAgain(e)
+  {
+    setTimeout(reloadImg, 1000, e);
+  }
+
+  function reloadImg(e)
+  {
+    var source = e.src;
+    e.src = source;
+  }
+</script>
+    <style>
+        .loading {
+  background: transparent url('{% static 'img/spinner.gif' %}') center no-repeat;
+}
+    </style>
+
+</header>
+<section class="page-in content-wrap">
+<div class="chapter-content">
+
+
+
+                    {% for links,num in images %}
+
+                    <img class="loading" src="https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&resize_h=0&rewriteMime=image%2F*&url={{links}}" onerror="tryAgain(this)" alt="">
+
+                    {% endfor %}
+
+
+
+</div>
+<div class="chapternav">
+
+{% if chapter == chapter_list.first %}
+    <a class="isDisabled" href="" title=" "><i class="fas fa-chevron-left"></i><span>Prev</span></a>
+    {% else %}
+    <a class="" href="/reader/{{old.chapter_slug}}" title="Chapter {{old.chapter_number}} "><i class="fas fa-chevron-left"></i><span>Prev</span></a>
+    {% endif %}
+
+
+    <select class="btn btn-primary form-control chapter_jump" style="border-color: #4D90E1;width: 60px;" onchange="location = this.value;">
+                    <option value="audi" selected>Select Chapters </option>
+
+                    {% for chapters in list %}
+                    {% if 'eng-li' in chapters.chapter_number %}
+                     <option value="{% url 'c_read' c_slug=chapters.chapter_slug %}">[ENG]:{{chapter_text.has_next}}Chapter {{chapters.chapter_number}}</option>
+
+                    {% elif 'fr-li' in chapters.chapter_number %}
+                    <option value="{% url 'c_read' c_slug=chapters.chapter_slug %}">[FR]:{{chapter_text.has_next}}Chapter {{chapters.chapter_number}}</option>
+                    {% else  %}
+
+                    <option value="{% url 'c_read' c_slug=chapters.chapter_slug %}">{{chapter_text.has_next}}Chapter {{chapters.chapter_number}}</option>
+                    {% endif %}
+
+                    {% endfor %}
+
+                </select>
+
+
+{% if chapter == chapter_list.last %}
+    <a class="isDisabled" href="" title=""><span>Next</span><i class="fas fa-chevron-right"></i></a>
+    {% else %}
+    <a class="" href="/reader/{{next.chapter_slug}}" title="Chapter {{next.chapter_number}} "><span>Next</span><i class="fas fa-chevron-right"></i></a>
+    {% endif %}
+</div>
+<aside class="control-action" translate="no">
+<nav class="fly-in">
+<ul class="tools">
+<li class="dnone">
+    
+
+	{% if chapter == chapter_list.first %}
+    <a class="isDisabled" href="" title=""><span></span><i class="fas fa-chevron-left"></i></a>
+    {% else %}
+    <a class="" href="/reader/{{old.chapter_slug}}" title="Chapter {{old.chapter_number}} "><span></span><i class="fas fa-chevron-left"></i></a>
+    {% endif %}
+
+
+</li>
+
+<li>
+<a data-tool="night" title="Night mode" data-night="0">
+<i class="fas fa-moon"></i>
+</a>
+</li>
+<li class="dnone">
+{% if chapter == chapter_list.last %}
+    <a class="isDisabled" href="" title=""><span></span><i class="fas fa-chevron-right"></i></a>
+    {% else %}
+    <a class="" href="/reader/{{next.chapter_slug}}" title="Chapter {{next.chapter_number}} "><span></span><i class="fas fa-chevron-right"></i></a>
+    {% endif %}
+
+</li>
+</ul>
+</nav>
+</aside>
+<div class="guide-message" style="
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px 30px;
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            border-radius: 10px;
+            text-align: center;
+        ">Tap the screen to use advanced tools</div>
+</section>
+    
+<section class="content-wrap">
+            <div id="disqus_thread"></div>
+<script>
+
+var disqus_config = function () {
+this.page.url = 'https://www.manga-raw.club/reader/{{chapter.chapter_slug}}';
+this.page.identifier = '/reader/{{chapter.chapter_slug}}';
+};
+
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://manganation.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+></section>
+   
+<section class="recommends content-wrap">
+<h3>Recommended <i class="fas fa-heart"></i></h3>
+<ul class="novel-list grid">
+{% for items,in in top %}
+<li class="novel-item">
+
+<a href="{% url 'minfo' m_slug=items.manga_slug %}" title="{{items.manga_name}}">
+<figure class="novel-cover">
+        {% if items.manga_cover %}
+<img class="lazy" src="{% static 'img/spinner.gif' %}" data-src='{{items.manga_cover.url}}' data-srcset="{{items.manga_cover.url}}" alt="{{items.manga_name}}" />
+        {% else %}
+<img class="lazy" src="{% static 'img/spinner.gif' %}" data-src='{{items.manga_cover_url}}' data-srcset="{{items.manga_cover_url}}" alt="{{items.manga_name}}" />
+    {% endif %}
+</figure>
+<h4 class="novel-title text2row">
+{{items.manga_name}}
+</h4>
+</a>
+<div class="novel-stats">
+<span class="text1row"></span>
+<span><i class="fas fa-medal"></i> Rank {{in}}</span>
+</div>
+</li>
+{% endfor %}
+</ul>
+</section>
+</article>
+</main>
+
+<footer class="footer">
+            <div class="container">
+
+
+                    <center><h1 style="color: black;">{{request.get_host}} Reader.</h1></center>
+                <br>
+                <hr>
+                <center><a href="{% url 'home' %}">HOMEPAGE</a></center>
+
+
+            </div>
+        </footer>
+
+
+
+<script src="{% static 'reader/cdn/1.js' %}" type="b9cbd6783c9dd2b54ebe6edb-text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/ismobilejs@1/dist/isMobile.min.js" type="b9cbd6783c9dd2b54ebe6edb-text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/sticky-kit@1.1.3/dist/sticky-kit.min.js" type="b9cbd6783c9dd2b54ebe6edb-text/javascript"></script>
+<script id='mainprocscript' src="{% static 'reader/cdn/2.js' %}" type="b9cbd6783c9dd2b54ebe6edb-text/javascript"></script>
+<script src="https://ajax.cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js" data-cf-settings="b9cbd6783c9dd2b54ebe6edb-|49" defer=""></script></body>
+
+</html>

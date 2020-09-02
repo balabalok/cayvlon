@@ -1,0 +1,154 @@
+{% load static %}
+{% load cache %}
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    {% block meta %}
+
+    {% endblock %}
+<meta name='dmca-site-verification' content='WGZndmtycUhFaS9yOENYRFpscWJPZz090' />
+<meta name="msvalidate.01" content="ED40613B37D8278ED9D2D4D9BB3C9E00" />
+<meta name="google-site-verification" content="kZdVubNbhsWVongV8ZzAx3rCzsgofXMe-dtYf6oDRV8" />
+    {% block title %}
+
+    {% endblock %}
+
+    {% cache 21600 file %}
+    <link rel="shortcut icon" href="{% static 'img/favico.ico' %}" />
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Roboto+Condensed:400,700|Roboto+Slab|Roboto:300,400,700|Nunito+Sans:400,600,700|Raleway:400,500|Noto+Sans" data-ignore="true">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.6/css/swiper.min.css" integrity="sha256-/MUsbxMVqlXbxtYsVUN7Scrbq8Hd5Up+BntZl2TuMLQ=" crossorigin="anonymous" />
+<script src="https://kit.fontawesome.com/16a588e028.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link id='mobilecss' href="{% static 'reader/cdn/1.css' %}" rel="stylesheet" type="text/css" media="screen and (min-width: 140px)" />
+<link href="{% static 'reader/cdn/2.css' %}" rel="stylesheet" type="text/css" media="screen and (min-width: 768px)" />
+<link href="{% static 'reader/cdn/3.css' %}" rel="stylesheet" type="text/css" media="screen and (min-width: 1024px)" />
+<link href="{% static 'reader/cdn/4.css' %}" rel="stylesheet" type="text/css" media="screen and (min-width: 1270px)" />
+    <link rel="stylesheet" href="{% static 'habab_ratings/ratings.css' %}">
+<script type="text/javascript" src="{% static 'habab_ratings/ratings.js' %}"></script>
+<link rel="manifest" href="/manifest.json" />
+<script async src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" type="9137b734b899dfe7b191b2b8-text/javascript"></script>
+
+    {% endcache %}
+
+{% block script %}
+
+{% endblock %}
+
+
+
+</head>
+<body class="fade-out">
+<header class="main-header" translate="no">
+<div class="wrapper">
+<div class="logo-mobile">
+<a href="/" title="MangaRaw">
+    {% cache 21600 staticupper %}
+<img src="{% static 'img/logo.png' %}" alt="MangaRaw" />
+    {% endcache %}
+</a>
+</div>
+<nav class="navigation-bar">
+<ul class="navbar-menu">
+<li class="nav-item">
+<a class="nav-link" href="/search"><i class="fas fa-search"></i> Search</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/browse"><i class="far fa-compass"></i> Browse</a>
+</li>
+<li class="nav-logo">
+<div class="logo-wrapper">
+<a href="/" title="MangaRaw">
+    {% cache 21600 staticlower %}
+<img src="{% static 'img/logo.png' %}" alt="MangaRaw" />
+    {% endcache %}
+</a>
+<div class="triangle-bottom"></div>
+</div>
+</li>
+<li class="nav-item">
+
+<a class="nav-link" href="javascript:{alert('Soon :)')}"><i class="fab fa-discord"></i> Discord</a>
+
+</li>
+<li class="nav-item">
+{% block random %}
+
+{% endblock %}
+</li>
+</ul>
+</nav>
+<div class="nav-back">
+</div>
+<i class="fas fa-bars mobile-nav-btn"></i>
+</div>
+</header>
+<div class="sidebar-wrapper"></div>
+<main role="main">
+    {% block content %}
+
+    {% endblock %}
+</main>
+{% cache 21600 foot %}
+<footer translate="no">
+<div class="wrapper">
+<div class="col logo">
+<a href="https://www.dmca.com/compliance/manga-raw.club" target="_blank" title="DMCA Compliance information for manga-raw.club" ><img class="footer-logo" src="https://www.dmca.com/img/dmca-compliant-grayscale.png" alt="logo-footer"></a>
+<span class="copyright">© {% now 'Y' %} manga-raw.club</span>
+</div>
+<nav class="col links">
+<ul>
+<li>
+<a href="/browse">Most Popular</a>
+</li>
+<li>
+<a href="#Latest">latest </a>
+</li>
+<li>
+<a href="/browse/?genre=Action">Action</a>
+</li>
+</ul>
+</nav>
+<nav class="col links">
+<ul>
+<li>
+<a href="/browse/?genre=romance">Romance</a>
+</li>
+<li>
+<a href="/browse/?genre=harem">Harem</a>
+</li>
+<li>
+<a href="/browse/?genre=Fantasy">Fantasy</a>
+</li>
+<li>
+<a href="/browse/?genre=Martial Arts">Martial Arts</a>
+</li>
+</ul>
+</nav>
+<nav class="col links">
+<ul>
+<li>
+<a href="/browse/?genre=webtoon">Webtoon</a>
+</li>
+<li>
+<a href="/browse/?genre=yaoi">Yaoi</a>
+</li>
+<li>
+<a href="/browse/?genre=Yuri">yuri</a>
+</li>
+<li>
+<a href="/browse/?genre=mystery">mystery</a>
+</li>
+</ul>
+</nav>
+</div>
+</footer>
+{% endcache %}
+{% cache 21600 filelower %}
+<script src="{% static 'reader/cdn/1.js' %}" type="b9cbd6783c9dd2b54ebe6edb-text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/ismobilejs@1/dist/isMobile.min.js" type="b9cbd6783c9dd2b54ebe6edb-text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/sticky-kit@1.1.3/dist/sticky-kit.min.js" type="b9cbd6783c9dd2b54ebe6edb-text/javascript"></script>
+<script id='mainprocscript' src="{% static 'reader/cdn/2.js' %}" type="b9cbd6783c9dd2b54ebe6edb-text/javascript"></script>
+<script src="https://ajax.cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js" data-cf-settings="b9cbd6783c9dd2b54ebe6edb-|49" defer=""></script></body>
+{% endcache %}
+</html>
